@@ -4,15 +4,9 @@ import matter from 'gray-matter'
 
 import Link from 'next/link'
 
-interface Post {
-  slug: string;
-  title: string;
-  description?: string;
-  date?: string;
-  category?: string;
-  tags?: string;
-  status?: string;
-}
+import { Post } from '@/utils/types'
+
+import styles from './page.module.css'
 
 export default function Home() {
   const directory = path.join(process.cwd(), 'content')
@@ -21,29 +15,45 @@ export default function Home() {
     return fs.statSync(folder).isDirectory()
   })
 
-  const posts: Post[] = folders.map((folder) => {
-    const filePath = path.join(directory, folder, 'index.md')
-    const fileContents = fs.readFileSync(filePath, 'utf8')
-    const { data, content } = matter(fileContents)
+  const posts: Post[] = folders
+    .map((folder) => {
+      const filePath = path.join(directory, folder, 'index.md')
+      const fileContents = fs.readFileSync(filePath, 'utf8')
+      const { data } = matter(fileContents)
 
-    return { 
-      ...data, 
-      title: data.title || folder,
-      slug: folder }
-  })
+      return { 
+        ...data, 
+        title: data.title || folder,
+        status: data.status,
+        date: data.date || '',
+        slug: folder }
+    })
+    .filter(post => post.status !== 'draft')
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return (
-    <main>
-      <h1>Blog Posts</h1>
-      <ul>
-        {posts.map((post: Post) => (
-          <li key={post.slug}>
-            <Link href={`/${post.slug}`}>
-              {post.title}
+    <div className={styles.box}>
+      <h4>
+        <span>Articles</span>
+        <Link href="/posts">View All</Link>
+      </h4>
+      <ul className={styles.posts}>
+        {posts && posts.map(post => (
+          <li className={styles.post} key={post.slug}>
+            <Link href={post.slug}>
+              <div className={styles.wrap}>
+                <span>{post.title}</span>
+                <span className={styles.date}>
+                  {new Date(post.date).toLocaleString('en-US', { month: 'short', year: 'numeric' }).toUpperCase().replace(' ', ', ')}
+                </span>
+              </div>
+              <span className={styles.description}>
+                {post.description}
+              </span>
             </Link>
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   )
 }
