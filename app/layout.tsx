@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import 'highlight.js/styles/github-dark.css'
 
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
@@ -30,9 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="main">
+        <main className="grid grid-rows-[74px_1fr_15vh] [grid-template-areas:'head''container''foot'] gap-0 h-full w-screen">
           <Header />
-          <div className="container">
+          <div className="container-layout">
             {children}
           </div>
           <Footer />

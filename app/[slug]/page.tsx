@@ -6,14 +6,13 @@ import { remark } from 'remark'
 import remarkRehype from 'remark-rehype'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeStringify from 'rehype-stringify'
-import { FaRegClock } from 'react-icons/fa';
-
+import { FaRegClock } from 'react-icons/fa'
 import { notFound } from 'next/navigation'
-
 import Tags from '@/components/tags/Tags'
 import { getEstimatedReadingTime } from '@/utils'
 
-import styles from './page.module.css'
+import { MDXRemote } from "next-mdx-remote-client/rsc"
+import { getPostBySlug } from '@/lib/posts'
 
 interface BlogPostProps {
   params: {
@@ -22,31 +21,31 @@ interface BlogPostProps {
 }
 
 export default async function BlogPost({ params }: BlogPostProps) {
-  const directory = path.join(process.cwd(), 'content')
-  const folder = fs.readdirSync(directory).find(name => name === params.slug)
+  const { slug } = await params
+  const post = getPostBySlug(slug)
+  const readingTime = getEstimatedReadingTime(post.content)
 
-  if (!folder) notFound()
-
-  const filePath = path.join(directory, folder, 'index.md')
-  const fileContents = fs.readFileSync(filePath, 'utf8')
-  const { data, content } = matter(fileContents)
-  const minutes = getEstimatedReadingTime(content)
-
-  const markup = await remark()
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(content);
-
-  const date = new Date(data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  if (!post) {
+    notFound()
+  }
 
   return (
-    <article className={styles.article}>
-      <span className={styles.date}>Published on {date}</span>
-      <h1>{data.title}</h1>
-      <h2 className={styles.time}><FaRegClock />&nbsp;{minutes} minutes</h2>
-      <Tags tags={data.tags} />
-      <div dangerouslySetInnerHTML={{ __html: markup.toString() }} />
+    <article className="max-w-none mx-auto py-10 px-4 area-main">
+      <h1 className="text-4xl font-bold mb-4">{post.metadata.title}</h1>
+      <div className="flex items-center text-sm text-gray-500 mb-6">
+        <FaRegClock className="mr-2" />
+        <span>{readingTime} min read</span>
+      </div>
+      {post.metadata.tags && <Tags tags={post.metadata.tags} />}
+      <MDXRemote 
+          source={post.content} 
+          options={{
+            mdxOptions: {
+              format: 'md',
+              rehypePlugins: [rehypeHighlight], 
+            }
+          }}
+        />
     </article>
   )
 }
