@@ -33,6 +33,12 @@ export const getAllPosts = cache(() => {
 
 export function getPostBySlug(slug: string) {
   const fullPath = path.join(POSTS_PATH, `${slug}/index.md`)
+  
+  // Check if file exists before reading
+  if (!fs.existsSync(fullPath)) {
+    return null
+  }
+  
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   
   // matter extracts the metadata from the YAML block

@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[` 1`] = `
+<div>
+  <header
+    class="flex justify-center items-center w-full h-[74px] border-b border-gray-300 dark:border-gray-700 bg-neutral-900 area-head self-start py-[10px] px-2 top-0 fixed"
+  >
+    <div
+      class="flex items-center px-4 max-w-[1120px] w-full"
+    >
+      <a
+        class="flex items-center"
+        href="/"
+      >
+        <span
+          class="font-bold text-2xl text-blue-600"
+        >
+          Abraham's Blog
+        </span>
+      </a>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`Header component matches the snapshot 1`] = `
+<div>
+  <header
+    class="flex justify-center items-center w-full h-[74px] border-b border-gray-300 dark:border-gray-700 bg-neutral-900 area-head self-start py-[10px] px-2 top-0 fixed"
+  >
+    <div
+      class="flex items-center px-4 max-w-[1120px] w-full"
+    >
+      <a
+        class="flex items-center"
+        href="/"
+      >
+        <span
+          class="font-bold text-2xl text-blue-600"
+        >
+          Abraham's Blog
+        </span>
+      </a>
+    </div>
+  </header>
+</div>
+`;

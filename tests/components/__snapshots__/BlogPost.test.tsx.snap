@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`BlogPost Component matches the snapshot 1`] = `
+<div>
+  <article
+    class="max-w-none mx-auto py-10 px-4 area-main"
+  >
+    <h1
+      class="text-4xl font-bold mb-4"
+    >
+      Test Post
+    </h1>
+    <div
+      class="flex items-center text-sm text-gray-500 mb-6"
+    >
+      <span
+        data-testid="clock-icon"
+      />
+      <span>
+        5
+         min read
+      </span>
+    </div>
+    <div
+      class="flex items-center gap-2 justify-center mt-6 mb-6 ml-0 mr-0"
+    >
+      <a
+        class="inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-border [a&]:hover:bg-accent [a&]:hover:text-accent-foreground bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
+        data-slot="badge"
+        data-variant="outline"
+        href="/posts?tag=test"
+      >
+        test
+      </a>
+      <a
+        class="inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-border [a&]:hover:bg-accent [a&]:hover:text-accent-foreground bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
+        data-slot="badge"
+        data-variant="outline"
+        href="/posts?tag= blog"
+      >
+         blog
+      </a>
+    </div>
+    <div>
+      This is a test blog post content.
+    </div>
+  </article>
+</div>
+`;
